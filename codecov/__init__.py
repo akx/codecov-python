@@ -584,7 +584,7 @@ def main(*argv, **kwargs):
                                      '''"''')
             write("  --> Found %s adjustments" % (adjustments.count('\n') - adjustments.count('\n\n') - 1))
             print "\033[92m....\033[0m", 2
-            reports = reports + '\n# path=fixes\n' + adjustments + '<<<<<< EOF'
+            reports = str(reports) + '\n# path=fixes\n' + str(adjustments) + '<<<<<< EOF'
             print "\033[92m....\033[0m", 3
 
         result = ''
