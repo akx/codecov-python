@@ -572,6 +572,7 @@ def main(*argv, **kwargs):
 
         if 'fix' not in codecov.disable:
             write("==> Appending adjustments (http://bit.ly/1O4eBpt)")
+            print "\033[92m....\033[0m", 1
             adjustments = try_to_run('''echo "'''
                                      '''$(find . -type f -name '*.kt' -exec grep -nIH '^/\*' {} \;)\n'''
                                      '''$(find . -type f -name '*.go' -exec grep -nIH '^[[:space:]]*$' {} \;)\n'''
@@ -582,7 +583,9 @@ def main(*argv, **kwargs):
                                      '''$(find . -type f -name '*.php' -exec grep -nIH '^[[:space:]]*{' {} \;)\n'''
                                      '''"''')
             write("  --> Found %s adjustments" % (adjustments.count('\n') - adjustments.count('\n\n') - 1))
+            print "\033[92m....\033[0m", 2
             reports = reports + '\n# path=fixes\n' + adjustments + '<<<<<< EOF'
+            print "\033[92m....\033[0m", 3
 
         result = ''
         if codecov.dump:
@@ -590,6 +593,7 @@ def main(*argv, **kwargs):
             write(reports)
             write('--------------------  EOF  --------------------')
         else:
+            print "\033[92m....\033[0m", 4
             write('==> Uploading')
             write('    .url ' + codecov.url)
             write('    .query ' + urlargs)
@@ -599,6 +603,7 @@ def main(*argv, **kwargs):
             while trys < 3:
                 trys += 1
                 try:
+                    print "\033[92m....\033[0m", 5
                     write('    Pinging Codecov...')
                     res = requests.post('%s/upload/v3?%s' % (codecov.url, urlargs),
                                         verify=codecov.cacert,
